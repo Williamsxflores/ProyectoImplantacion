@@ -1,42 +1,57 @@
+/* Variables CSS */
+:root {
+  --BLOCKED-color: #4d4446;
+  --LEADS-color: #d4d9e2;
+  --PIPELINE-color: #c0e94e;
+  --RESUME_REVIEW-color: #aea291;
+  --PRE_SCREEN-color: #ffbd08;
+  --CODE_TEST-color: #ff8625;
+  --TECHNICAL_INTERVIEW-color: #ef30a8;
+  --OFFER_PROCESS-color: #a163d5;
+  --OFFER_ACCEPTED-color: #546ecf;
+  --IMMIGRATION_PROCESS-color: #4aaeee;
+  --HIRED-color: #09d8bf;
+  --DISCARDED-color: #6d6e71;
+
+  --warning-color: #f95d77;
+  --snow-color: #f7f8fc;
+  --white-color: #ffffff;
+  --oxford-color: #6d6e71;
+  --gray-dark-color: #323232;
+  --gray-medium-color: #d4d9e2;
+  --blue-dark-color: #1c325f;
+  --blue-medium-color: #0b44aa;
+  --blue-light-color: #4280f4;
+  --green-light-color: #09d8bf;
+  --green-medium-color: #04a491;
+  --green-color: #3bad2f;
+  --zero-state-color: #eff1f9;
+  --zero-state-dark-color: #d4dae6;
+  --purple-light-color: #efe4f7;
+  --purple-dark-color: #3c067e;
+  --orange-medium-color: #fbbf4d;
+}
+
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: 'Open Sans', sans-serif;
-}
-
-body {
-  margin: 0;
-  background: #4d4d4d;
-}
-
-.slide-in-left-enter {
-  transform: translateX(-100%);
-}
-
-.slide-in-left-enter-active {
-  transform: translateX(0);
-  opacity: 1;
-  transition: all 200ms;
-}
-
-.slide-in-left-exit {
-  transform: translateX(0%);
-  opacity: 1;
-}
-
-.slide-in-left-exit-active {
-  transform: translateX(-100%);
-  opacity: 0;
-  transition: all 200ms;
-}
-
-.center {
-  text-align: center;
+html,body{
+  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  font-family: Ubuntu;
+  font-size: 1rem;
+  color: var(--gray-dark-color) !important;
+  background-color: var(--snow-color);
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  background-color: transparent;
+}
+

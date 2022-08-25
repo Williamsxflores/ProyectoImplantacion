@@ -5,6 +5,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import Users from "./user/pages/Users";
 import NewPlace from "./places/pages/NewPlace";
@@ -13,6 +14,8 @@ import UpdatePlace from "./places/pages/UpdatePlace";
 import Auth from "./user/pages/Auth";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/context/auth-context";
+
+toast.configure();
 
 const App = () => {
 
@@ -71,6 +74,7 @@ const App = () => {
         <MainNavigation />
         <main>{routes}</main>
       </Router>
+      <ToastContainer />
     </AuthContext.Provider>
   );
 };

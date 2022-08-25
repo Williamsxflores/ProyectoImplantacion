@@ -4,10 +4,8 @@
 }
 
 .authentication {
-  width: 90%;
   max-width: 25rem;
-  margin: 7rem auto;
-  text-align: center;
+  text-align: center; 
 }
 
 .authentication form {
@@ -15,12 +13,22 @@
 }
 
 .Cont{
-  display: flex;;
+  display: flex;
   flex-direction: row;
-  border-style: solid;
-  border-color: red;
 }
 
-.logo2{
-  margin-top: 100px;
+.logo{
+  margin-right: 1rem;
+  width: 30rem;
+  height: 25rem;
+}
+
+.card{
+  width: 57rem;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  margin-top: 15rem;
 }
