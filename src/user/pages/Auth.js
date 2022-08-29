@@ -71,7 +71,7 @@ const Auth = () => {
         <Card className="card">
           <div className="Cont">
             <div>
-              <img className="logo" src={assets.LOGIN.image} alt="logo" />
+              <img className="logo" src={assets.LOG_IMAGE.image} alt="logo" />
             </div>
             <div className="authentication">
               <h2> Login or created account </h2>
