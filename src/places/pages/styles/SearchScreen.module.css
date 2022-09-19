@@ -1,0 +1,36 @@
+.Title {
+  display: flex;
+  justify-content: center;
+}
+
+.Form {
+  display: flex;
+  justify-content: center;
+}
+
+.MarginInputs {
+  display: flex;
+  margin: 1rem;
+}
+
+.FormButton {
+  display: flex;
+  justify-content: center;
+}
+
+.ContainerImg {
+  display: flex;
+  justify-content: center;
+}
+
+.Img {
+  width: 1000px;
+  height: 600px;
+  margin-top: 1rem;
+}
+
+.ContainerRegisterBusiness {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem;
+}

@@ -5,29 +5,29 @@
 
 .authentication {
   max-width: 25rem;
-  text-align: center; 
+  text-align: center;
 }
 
 .authentication form {
   margin-bottom: 1rem;
 }
 
-.Cont{
+.Cont {
   display: flex;
   flex-direction: row;
 }
 
-.logo{
+.logo {
   margin-right: 1rem;
   width: 30rem;
   height: 25rem;
 }
 
-.card{
+.card {
   width: 57rem;
 }
 
-.container{
+.container {
   display: flex;
   justify-content: center;
   margin-top: 15rem;

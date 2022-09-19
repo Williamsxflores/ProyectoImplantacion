@@ -24,6 +24,13 @@ const NavLinks = (props) => {
           <NavLink to="/places/new">NEW JOBS</NavLink>
         </li>
       )}
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/search" exact>
+            SEARCH
+          </NavLink>
+        </li>
+      )}
       {!auth.isLoggedIn && (
         <li>
           <NavLink to="/auth">AUTHENTICATE</NavLink>
