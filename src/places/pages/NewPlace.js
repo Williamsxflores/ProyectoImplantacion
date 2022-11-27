@@ -52,13 +52,16 @@ const NewPlace = () => {
         creator: auth.userId,
       };
 
-      const response = await fetch("http://localhost:5000/api/places", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newJob),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/places",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newJob),
+        }
+      );
 
       const responseData = await response.json();
       console.log(responseData);

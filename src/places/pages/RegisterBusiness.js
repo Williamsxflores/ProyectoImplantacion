@@ -78,13 +78,16 @@ const RegisterBusiness = () => {
         attendsSecond: formState.inputs.attendsSecond.value,
       };
 
-      const response = await fetch("http://localhost:5000/api/business", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newBusiness),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/business",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newBusiness),
+        }
+      );
 
       const responseData = await response.json();
       console.log(responseData);

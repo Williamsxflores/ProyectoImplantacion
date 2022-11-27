@@ -16,7 +16,7 @@ const SearchScreen = () => {
     const fetchUsers = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/business"
+          process.env.REACT_APP_BACKEND_URL + "/business"
         );
 
         setLoadedUsers(responseData);
