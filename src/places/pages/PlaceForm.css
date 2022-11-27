@@ -12,12 +12,14 @@
 .newPlaceCont {
   display: flex;;
   flex-direction: row;
-  border-style: solid;
-  border-color: red;
   width: 100%;
 }
 
 .newPlaceCont .log{
   width: 28%;
-  padding: 1rem;
+}
+
+.logo {
+  width: 30rem;
+  height: 35rem;
 }

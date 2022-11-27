@@ -1,152 +1,175 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useHistory } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-import Card from '../../shared/components/UIElements/Card';
+import Card from "../../shared/components/UIElements/Card";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../shared/Util/validators";
-import { useForm } from "../../shared/hooks/form-hooks";
+} from "../../shared/Util/validators.js";
+import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceForm.css";
 
-const DUMMY_PLACES = [
-  {
-    id: 'p1',
-    title: 'Emp. state buildingssss',
-    description: 'One of the most famouse sky scrapers in the world',
-    imageUrl:'https://marvel-b1-cdn.bc0a.com/f00000000179470/www.esbnyc.com/sites/default/files/styles/small_feature/public/2019-10/home_banner-min.jpg?itok=uZt-03Vw',
-    address: '20 w 34th St, New York, NY 10001',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    
-    creator: 'u1'
-  },
-
-  //this is for the second users
-
-  {
-    id: 'p2',
-    title: 'Emp. state building',
-    description: 'One of the most famouse sky scrapers in the world',
-    imageUrl:
-      'https://marvel-b1-cdn.bc0a.com/f00000000179470/www.esbnyc.com/sites/default/files/styles/small_feature/public/2019-10/home_banner-min.jpg?itok=uZt-03Vw',
-    address: '20 w 34th St, New York, NY 10001',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    creator: 'u2'
-  },
-
-  // this is for the third users
-  {
-    id: 'p3',
-    title: 'Emperor Pinguin. state building',
-    description: 'One of the most famouse sky scrapers in the world',
-    imageUrl:
-      'https://marvel-b1-cdn.bc0a.com/f00000000179470/www.esbnyc.com/sites/default/files/styles/small_feature/public/2019-10/home_banner-min.jpg?itok=uZt-03Vw',
-    address: '20 w 34th St, New York, NY 10001',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    creator: 'u3'
-  },
-];
-
 const UpdatePlace = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedPlace, setLoadedPlace] = useState();
   const placeId = useParams().placeId;
+  const history = useHistory();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
       title: {
-        value: '',
+        value: "",
         isValid: false,
       },
       description: {
-        value: '',
+        value: "",
+        isValid: false,
+      },
+      address: {
+        value: "",
+        isValid: false,
+      },
+      image: {
+        value: "",
         isValid: false,
       },
     },
     false
   );
 
-  const identifiedPlace = DUMMY_PLACES.find(p => p.id === placeId);
-
   useEffect(() => {
-      if(identifiedPlace){
-        setFormData(
-            {
-              title: {
-                value: identifiedPlace.title,
-                isValid: true,
-              },
-              description: {
-                value: identifiedPlace.description,
-                isValid: true,
-              },
-            },
-            true
-          );
-      }
-      setIsLoading(false);
-  }, [setFormData, identifiedPlace]);
+    const fetchPlace = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/places/${placeId}`
+        );
+        setLoadedPlace(responseData.place);
 
-  const placeUpdateSubmitHandler = event => {
+        setFormData(
+          {
+            title: {
+              value: responseData.place.title,
+              isValid: true,
+            },
+            description: {
+              value: responseData.place.description,
+              isValid: true,
+            },
+            address: {
+              value: responseData.place.address,
+              isValid: true,
+            },
+            image: {
+              value: responseData.place.image,
+              isValid: true,
+            },
+          },
+          true
+        );
+      } catch (err) {}
+    };
+    fetchPlace();
+  }, [sendRequest, placeId, setFormData]);
+
+  const placeUpdateSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/places/${placeId}`,
+        "PATCH",
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+          address: formState.inputs.address.value,
+          image: formState.inputs.image.value,
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+      history.push("/" + auth.userId + "/jobs");
+    } catch (err) {}
   };
 
-  if (!identifiedPlace) {
+  if (isLoading) {
     return (
       <div className="center">
-          <Card>
-        <h2>Could not find place!</h2>
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!loadedPlace && !error) {
+    return (
+      <div className="center">
+        <Card>
+          <h2>Could not find place!</h2>
         </Card>
       </div>
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="center">
-        <h2>loading!</h2>
-      </div>
-    );
-  }
-
   return (
-    <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
-      <Input
-        id="title"
-        element="input"
-        type="text"
-        label="Title"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title."
-        onInput={inputHandler}
-        initialValue={formState.inputs.title.value}
-        initialValid={formState.inputs.title.isValid}
-      />
-      <Input
-        id="Description"
-        element="textarea"
-        label="Description"
-        validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid description (min 5 characters.)."
-        onInput={inputHandler}
-        initialValue={formState.inputs.description.value}
-        initialValid={formState.inputs.description.valid}
-      />
-      <Button type="submit" disabled={!formState.isValid}>
-        UPDATE PLACE
-      </Button>
-    </form>
+    <React.Fragment>
+      {/* <ErrorModal error={error} onClear={clearError} /> */}
+      {!isLoading && loadedPlace && (
+        <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
+          <Input
+            id="title"
+            element="input"
+            type="text"
+            label="Title"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid title."
+            onInput={inputHandler}
+            initialValue={loadedPlace.title}
+            initialValid={true}
+          />
+          <Input
+            id="description"
+            element="input"
+            label="Description"
+            validators={[VALIDATOR_MINLENGTH(5)]}
+            errorText="Please enter a valid description (min. 5 characters)."
+            onInput={inputHandler}
+            initialValue={loadedPlace.description}
+            initialValid={true}
+          />
+          <Input
+            id="address"
+            element="input"
+            type="text"
+            label="Address"
+            validators={[VALIDATOR_REQUIRE(5)]}
+            errorText="Please enter a valid Address."
+            onInput={inputHandler}
+            initialValue={loadedPlace.address}
+            initialValid={true}
+          />
+          <Input
+            id="image"
+            element="input"
+            type="text"
+            label="Image"
+            validators={[VALIDATOR_REQUIRE(5)]}
+            errorText="Please enter a valid image url."
+            onInput={inputHandler}
+            initialValue={loadedPlace.image}
+            initialValid={true}
+          />
+          <Button type="submit" disabled={!formState.isValid}>
+            UPDATE PLACE
+          </Button>
+        </form>
+      )}
+    </React.Fragment>
   );
 };
 

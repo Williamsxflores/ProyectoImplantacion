@@ -1,15 +1,22 @@
-import React from "react";
+import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/Util/validators";
-import { useForm } from "../../shared/hooks/form-hooks";
+import { useForm } from "../../shared/hooks/form-hook";
+import { AuthContext } from "../../shared/context/auth-context";
+import { assets } from "constants.js";
 import "./PlaceForm.css";
 
 const NewPlace = () => {
+  const auth = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -24,19 +31,50 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
 
-  const placeSubmitHandler = (event) => {
+  const history = useHistory();
+
+  const placeSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs); // send this to the bakcend;
+    try {
+      setIsLoading(true);
+      const newJob = {
+        title: formState.inputs.title.value,
+        description: formState.inputs.description.value,
+        image: formState.inputs.image.value,
+        address: formState.inputs.address.value,
+        creator: auth.userId,
+      };
+
+      const response = await fetch("http://localhost:5000/api/places", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newJob),
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+      history.push("/");
+    }
   };
 
   return (
     <>
       <div className="newPlaceCont">
-       
+        {isLoading && <LoadingSpinner asOverlay />}
         <form className="place-form" onSubmit={placeSubmitHandler}>
           <h2>
             Encuentra como cambiar el futuro de su vida al toque de una sola
@@ -60,6 +98,14 @@ const NewPlace = () => {
             onInput={inputHandler}
           />
           <Input
+            id="image"
+            element="input"
+            label="Image"
+            validators={[VALIDATOR_MINLENGTH(5)]}
+            errorText="Please enter a image url link"
+            onInput={inputHandler}
+          />
+          <Input
             id="address"
             element="input"
             label="address"
@@ -67,37 +113,10 @@ const NewPlace = () => {
             errorText="Please enter a valid address.."
             onInput={inputHandler}
           />
-          <Input
-            id="phone"
-            element="input"
-            label="Type"
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText="Please enter a valid phone number.."
-            onInput={inputHandler}
-          />
-          <Input
-            id="Status"
-            element="textarea"
-            label="Validation"
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText="Please enter a valid description (at least 5 characters)."
-            onInput={inputHandler}
-          />
-          <p> Your almost done, just need to validate it before adding it!</p>
-          <br></br>
           <Button type="submit" disabled={!formState.isValid}>
             ADD JOB
           </Button>
         </form>
-
-        <div className="log">
-          <img
-            src="https://scontent.ftij1-1.fna.fbcdn.net/v/t39.30808-6/281961696_5046350385434493_5821298273950707961_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_eui2=AeHgEQ0oVqSN-zZx4SDTeCKjSrB_tyI4HtBKsH-3Ijge0AZ_EnG8TMCKfOZcIHTzjBlKh2tv9CmvSH4nQCdOMF57&_nc_ohc=rmnUSTgM_xEAX_Chnlb&_nc_ht=scontent.ftij1-1.fna&oh=00_AT-6UJgZz069x-Kj3dt4gPUxzEIvrmnGbAIIcUpBN6hoYQ&oe=62906A84"
-            alt="logo"
-            //   style={{ width: props.width, height: props.width }}
-          />
-        </div>
-
       </div>
     </>
   );
