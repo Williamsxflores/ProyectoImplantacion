@@ -10,7 +10,6 @@ import {
 } from "../../shared/Util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-import { assets } from "constants.js";
 import "./PlaceForm.css";
 
 const NewPlace = () => {

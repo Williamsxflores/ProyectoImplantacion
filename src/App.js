@@ -50,7 +50,7 @@ const App = () => {
         <Route path="/places/:placeId">
           <UpdatePlace />
         </Route>
-        <Route path="/search" exact>
+        <Route path="/business" exact>
           <SearchScreen />
         </Route>
         <Route path="/RegisterBusiness" exact>
@@ -70,6 +70,9 @@ const App = () => {
         </Route>
         <Route path="/auth">
           <Auth />
+        </Route>
+        <Route path="/business" exact>
+          <SearchScreen />
         </Route>
         <Redirect to="/auth" />
       </Switch>

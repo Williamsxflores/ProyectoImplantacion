@@ -12,14 +12,12 @@ const PlaceItem = (props) => {
   const { isLoading, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const openMapHandler = () => setShowMap(true);
 
   const closeMapHandler = () => setShowMap(false);
 
   const confirmDeleteHandler = async () => {
-    setShowConfirmModal(false);
     try {
       await sendRequest(
         `http://localhost:5000/api/places/${props.id}`,

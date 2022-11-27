@@ -6,7 +6,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const UserPlaces = () => {
   const [loadedPlaces, setLoadedPlaces] = useState([]);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
 
   const userId = useParams().userId;
 
@@ -35,7 +35,7 @@ const UserPlaces = () => {
           <LoadingSpinner />
         </div>
       )}
-      {(!isLoading && loadedPlaces.length !== 0) && (
+      {!isLoading && loadedPlaces.length !== 0 && (
         <PlaceList items={loadedPlaces} onDeletePlace={placeDeletedHandler} />
       )}
     </React.Fragment>

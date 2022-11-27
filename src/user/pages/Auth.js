@@ -11,6 +11,7 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/Util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import { assets } from "constants.js";
 import "./Auth.css";
@@ -18,9 +19,10 @@ import "./Auth.css";
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState();
   const [showModal, setShowModal] = useState(false);
+  const { isLoading, error, sendRequest } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -63,55 +65,44 @@ const Auth = () => {
   const authSubmitHandler = async (event) => {
     event.preventDefault();
 
-    setIsLoading(true);
+    // setIsLoading(true);
 
     if (isLoginMode) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/users/login",
+          "POST",
+          JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
-        });
-
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-        setIsLoading(false);
-        auth.login(responseData.user._id);
+          {
+            "Content-Type": "application/json",
+          }
+        );
+        auth.login(responseData.user.id);
       } catch (err) {
-        setIsLoading(false);
-        setError(err.message || "Something went wrong, please try again.");
         setShowModal(true);
       }
     } else {
       try {
-        const response = await fetch("http://localhost:5000/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-        });
+        const formData = {
+          email: formState.inputs.email.value,
+          name: formState.inputs.name.value,
+          password: formState.inputs.password.value,
+        };
 
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-        setIsLoading(false);
-        auth.login();
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/users/signup",
+          "POST",
+          JSON.stringify(formData),
+          {
+            "Content-Type": "application/json",
+          }
+        );
+
+        auth.login(responseData.user.id);
       } catch (err) {
-        setIsLoading(false);
-        setError(err.message || "Something went wrong, please try again.");
         setShowModal(true);
       }
     }

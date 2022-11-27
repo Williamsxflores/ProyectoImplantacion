@@ -35,11 +35,8 @@ const UsersList = (props) => {
           <div className="titulo">
             <div>
               <h1 className="">Centro de atencion para la empresa</h1>
-              <img className="logo" src={assets.MAIN_IMAGE.image} alt="logo" />
+              <img className="logo" src={assets.SEARCH_IMG.image} alt="logo" />
               <h2 className="">Como podemos ayudarte?</h2>
-              <div className="">
-                <input className="" />
-              </div>
               <br />
               Estamos enfocados en el avance de su vida, para lograr cambios y
               entendernos mejor, para darles una mano a las personas que no
@@ -100,7 +97,7 @@ const UsersList = (props) => {
         </div>
       </section>
 
-      <section className  ="ContainerUserList">
+      <section className="ContainerUserList">
         <ul className="Userslist">
           {users.map((user) => (
             <UserItem

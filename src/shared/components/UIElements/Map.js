@@ -17,9 +17,8 @@ const Map = (props) => {
     googleMapsApiKey: "AIzaSyC6DtoJosK-lFyB8uc3oQmeA5GDPE6dOoM",
   });
 
+  console.log(map);
   const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    
     setMap(map);
   }, []);
 
@@ -35,7 +34,7 @@ const Map = (props) => {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      <Marker position={center}/>
+      <Marker position={center} />
     </GoogleMap>
   ) : (
     <></>
