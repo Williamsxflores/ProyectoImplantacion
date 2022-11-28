@@ -3,18 +3,17 @@ import React from "react";
 import Card from "../../shared/components/UIElements/Card";
 import PlaceItem from "./PlaceItem";
 import Button from "../../shared/components/FormElements/Button";
+import { assets } from "../../constants.js";
 import "./PlaceList.css";
 
 const PlaceList = (props) => {
-
   if (props.items.length === 0) {
     return (
       <div className="place-list center">
         <Card>
-          <h2>
-            No hay trabajos de ese estilo, tal vez guste publicar el suyo?
-          </h2>
-          <Button to="/places/new"> Shared JOB</Button>
+          <h2>Este usuario no agregado Trabajos</h2>
+          <img src={assets.NOT_FOUND.image} alt={assets.NOT_FOUND.key} />
+          <Button to="/">BACK</Button>
         </Card>
       </div>
     );

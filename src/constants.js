@@ -18,5 +18,9 @@ export const assets = {
   SEARCH_IMG:{
     key:"backgroun-img",
     image:"/assets/search-img.jpg"
+  },
+  NOT_FOUND: {
+    key:"not_found.jpg",
+    image:"/assets/not_found.jpg"
   }
 };
