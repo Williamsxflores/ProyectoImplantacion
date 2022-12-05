@@ -49,7 +49,7 @@ const PlaceItem = (props) => {
           </div>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
-              View on MAP
+              Mirar en mapa
             </Button>
             {auth.isLoggedIn && (
               <Button to={`/places/${props.id}`}> EDIT </Button>

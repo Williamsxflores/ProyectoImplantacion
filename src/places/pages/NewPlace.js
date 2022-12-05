@@ -86,7 +86,7 @@ const NewPlace = () => {
             id="title"
             element="input"
             type="text"
-            label="Name"
+            label="Nombre"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid title."
             onInput={inputHandler}
@@ -94,7 +94,7 @@ const NewPlace = () => {
           <Input
             id="description"
             element="textarea"
-            label="Description"
+            label="Descripcion"
             validators={[VALIDATOR_MINLENGTH(5)]}
             errorText="Please enter a valid description (at least 5 characters)."
             onInput={inputHandler}
@@ -102,7 +102,7 @@ const NewPlace = () => {
           <Input
             id="image"
             element="input"
-            label="Image"
+            label="Imagen"
             validators={[VALIDATOR_MINLENGTH(5)]}
             errorText="Please enter a image url link"
             onInput={inputHandler}
@@ -110,7 +110,7 @@ const NewPlace = () => {
           <Input
             id="address"
             element="input"
-            label="address"
+            label="Direccion"
             validators={[VALIDATOR_MINLENGTH(5)]}
             errorText="Please enter a valid address.."
             onInput={inputHandler}

@@ -123,7 +123,7 @@ const Auth = () => {
               <img className="logo" src={assets.LOG_IMAGE.image} alt="logo" />
             </div>
             <div className="authentication">
-              <h2> Login or created account </h2>
+              <h2> INICIA SESION O CREAR UNA CUENTA </h2>
               <hr />
               <form onSubmit={authSubmitHandler}>
                 {!isLoginMode && (
@@ -161,14 +161,12 @@ const Auth = () => {
               </form>
 
               <p>
-                Si usted desea crear una cuenta porfavor balbalbalbal and
-                typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown
-                printer took a galley
+                Si usted desea crear una cuenta por favor presione el botón
+                "cambiar a crear cuenta"
               </p>
 
               <Button inverse onClick={switchModeHandler}>
-                SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
+                CAMBIAR A {isLoginMode ? "CREAR CUENTA" : "INICIAR SESION"}
               </Button>
             </div>
           </div>

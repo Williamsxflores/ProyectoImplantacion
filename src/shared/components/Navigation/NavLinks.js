@@ -11,23 +11,23 @@ const NavLinks = (props) => {
     <ul className="nav-links">
       <li>
         <NavLink to="/" exact>
-          USER
+          USUARIO
         </NavLink>
       </li>
       {auth.isLoggedIn && (
         <li>
-          <NavLink to={`/${auth.userId}/jobs`}>MY JOBS</NavLink>
+          <NavLink to={`/${auth.userId}/jobs`}>MIS EMPLEOS</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/places/new">NEW JOBS</NavLink>
+          <NavLink to="/places/new">NUEVO EMPLEOS</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
         <li>
           <NavLink to="/business" exact>
-            BUSINESS
+            EMPRESAS
           </NavLink>
         </li>
       )}
@@ -35,17 +35,17 @@ const NavLinks = (props) => {
         <>
           <li>
             <NavLink to="/business" exact>
-              BUSINESS
+            EMPRESAS
             </NavLink>
           </li>
           <li>
-            <NavLink to="/auth">AUTHENTICATE</NavLink>
+            <NavLink to="/auth">INICIAR SESION</NavLink>
           </li>
         </>
       )}
       {auth.isLoggedIn && (
         <li>
-          <button onClick={auth.logout}> LOGOUT </button>
+          <button onClick={auth.logout}> CERRAR SESION </button>
         </li>
       )}
     </ul>
