@@ -116,7 +116,7 @@ const NewPlace = () => {
             onInput={inputHandler}
           />
           <Button type="submit" disabled={!formState.isValid}>
-            ADD JOB
+            AGREGA EL EMPLEO
           </Button>
         </form>
       </div>

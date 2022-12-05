@@ -131,7 +131,7 @@ const Auth = () => {
                     element="input"
                     id="name"
                     type="text"
-                    label="Your Name"
+                    label="Tu nombre"
                     validators={[VALIDATOR_REQUIRE]}
                     erroText="Please enter a name."
                     onInput={inputHandler}
@@ -141,7 +141,7 @@ const Auth = () => {
                   element="input"
                   id="email"
                   type="email"
-                  label="E-Mail"
+                  label="Correo"
                   validators={[VALIDATOR_EMAIL()]}
                   errorText="Please enter a valid email address."
                   onInput={inputHandler}
@@ -150,13 +150,13 @@ const Auth = () => {
                   element="input"
                   id="password"
                   type="password"
-                  label="Password"
+                  label="Contraseña"
                   validators={[VALIDATOR_MINLENGTH(5)]}
                   errorText="Please enter a valid password atleast 5 characters."
                   onInput={inputHandler}
                 />
                 <Button type="submit" disabled={!formState.isValid}>
-                  {isLoginMode ? "LOGIN" : "SIGNUP"}
+                  {isLoginMode ? "INICIAR SESION" : "CREAR CUENTA"}
                 </Button>
               </form>
 

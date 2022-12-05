@@ -52,12 +52,12 @@ const PlaceItem = (props) => {
               Mirar en mapa
             </Button>
             {auth.isLoggedIn && (
-              <Button to={`/places/${props.id}`}> EDIT </Button>
+              <Button to={`/places/${props.id}`}> EDITAR </Button>
             )}
 
             {auth.isLoggedIn && (
               <Button danger onClick={confirmDeleteHandler}>
-                DELETE
+                BORRAR
               </Button>
             )}
           </div>
